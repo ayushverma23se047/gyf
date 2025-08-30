@@ -148,6 +148,7 @@ const AuthModals = ({ isLoginOpen, isSignupOpen, onCloseLogin, onCloseSignup, on
       const data = await mockSignup(signupData);
       
       // Handle successful signup (e.g., show success message, auto-login)
+      login(data);
       console.log('Signup successful:', data);
       handleCloseSignup();
 

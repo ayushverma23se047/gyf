@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import OutfitCatalog from './components/OutfitCatalog';
 import FloatingClothes from './components/FloatingClothes';
 import CameraCapture from './components/CameraCapture';
+import AuthModals from './components/AuthModals';
 import { CartProvider } from './contexts/CartContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
@@ -12,6 +13,8 @@ function AppContent() {
   const [currentView, setCurrentView] = useState('home');
   const [userPreferences, setUserPreferences] = useState(null);
   const [userPrompt, setUserPrompt] = useState('');
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
   const { isAuthenticated } = useAuth();
 
   const handleStartCamera = () => {
@@ -19,7 +22,25 @@ function AppContent() {
   };
 
   const handleShowLogin = () => {
-    // This will be handled by the Header component
+    setShowLoginModal(true);
+  };
+
+  const handleCloseLogin = () => {
+    setShowLoginModal(false);
+  };
+
+  const handleCloseSignup = () => {
+    setShowSignupModal(false);
+  };
+
+  const handleSwitchToSignup = () => {
+    setShowLoginModal(false);
+    setShowSignupModal(true);
+  };
+
+  const handleSwitchToLogin = () => {
+    setShowSignupModal(false);
+    setShowLoginModal(true);
   };
 
   const handleCameraAnalysisComplete = (analysis, preferences, prompt) => {
@@ -51,6 +72,7 @@ function AppContent() {
           <Header 
             onLogoClick={handleBackHome} 
             onCategorySelect={handleCategorySelect}
+            onShowLogin={handleShowLogin}
           />
           
           {currentView === 'home' && (
@@ -72,6 +94,15 @@ function AppContent() {
             isOpen={currentView === 'camera'}
             onClose={handleBackHome}
             onAnalysisComplete={handleCameraAnalysisComplete}
+          />
+
+          <AuthModals
+            isLoginOpen={showLoginModal}
+            isSignupOpen={showSignupModal}
+            onCloseLogin={handleCloseLogin}
+            onCloseSignup={handleCloseSignup}
+            onSwitchToSignup={handleSwitchToSignup}
+            onSwitchToLogin={handleSwitchToLogin}
           />
         </motion.div>
       </div>

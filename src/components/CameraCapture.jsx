@@ -101,10 +101,11 @@ const CameraCapture = ({ isOpen, onClose, onAnalysisComplete }) => {
     handleClose();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
     handleQuestionnaireComplete();
-  };
+  }, [budget, prompt, analysisResult, onAnalysisComplete]);
+
   const handleClose = useCallback(() => {
     stopCamera();
     setCapturedImage(null);
@@ -325,7 +326,7 @@ const CameraCapture = ({ isOpen, onClose, onAnalysisComplete }) => {
                       </div>
 
                       <button
-                        onClick={(e)=>handleSubmit(e)}
+                        onClick={handleSubmit}
                         disabled={!budget || !prompt.trim()}
                         className="w-full bg-black text-white py-3 rounded-xl font-medium hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                       >

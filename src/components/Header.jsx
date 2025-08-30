@@ -8,11 +8,9 @@ import CartModal from './CartModal';
 import AuthModals from './AuthModals';
 import CategoryModal from './CategoryModal';
 
-const Header = ({ onLogoClick, onCategorySelect }) => {
+const Header = ({ onLogoClick, onCategorySelect, onShowLogin }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const { getTotalItems } = useCart();
@@ -21,16 +19,6 @@ const Header = ({ onLogoClick, onCategorySelect }) => {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     setIsCategoryOpen(true);
-  };
-
-  const handleSwitchToSignup = () => {
-    setIsLoginOpen(false);
-    setIsSignupOpen(true);
-  };
-
-  const handleSwitchToLogin = () => {
-    setIsSignupOpen(false);
-    setIsLoginOpen(true);
   };
 
   return (
@@ -84,7 +72,7 @@ const Header = ({ onLogoClick, onCategorySelect }) => {
               {!isAuthenticated ? (
                 <div className="flex items-center space-x-3">
                   <motion.button
-                    onClick={() => setIsLoginOpen(true)}
+                    onClick={onShowLogin}
                     className="px-6 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -92,7 +80,7 @@ const Header = ({ onLogoClick, onCategorySelect }) => {
                     Login
                   </motion.button>
                   <motion.button
-                    onClick={() => setIsSignupOpen(true)}
+                    onClick={onShowLogin}
                     className="px-6 py-2 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -172,15 +160,6 @@ const Header = ({ onLogoClick, onCategorySelect }) => {
           <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         </>
       )}
-      
-      <AuthModals
-        isLoginOpen={isLoginOpen}
-        isSignupOpen={isSignupOpen}
-        onCloseLogin={() => setIsLoginOpen(false)}
-        onCloseSignup={() => setIsSignupOpen(false)}
-        onSwitchToSignup={handleSwitchToSignup}
-        onSwitchToLogin={handleSwitchToLogin}
-      />
       
       <CategoryModal
         isOpen={isCategoryOpen}

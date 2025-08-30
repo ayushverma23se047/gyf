@@ -133,13 +133,12 @@ const OutfitCatalog = ({ preferences, prompt, onBack }) => {
             {filteredOutfits.map((outfit, index) => (
               <motion.div
                 key={outfit.id}
-                className="bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer"
+                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -5, scale: 1.02 }}
-                onClick={() => setSelectedOutfit(outfit)}
               >
                 {/* Image */}
                 <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden">
@@ -177,34 +176,28 @@ const OutfitCatalog = ({ preferences, prompt, onBack }) => {
 
                 {/* Content */}
                 <div className="p-6">
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-start justify-between mb-3">
                     <h3 className="text-lg font-semibold text-gray-900">{outfit.name}</h3>
-                    <div className="flex items-center space-x-1">
-                      <div className="bg-green-100 px-2 py-1 rounded-full">
-                        <span className="text-green-800 text-xs font-medium">
-                          {outfit.matchScore}% Match
-                        </span>
-                      </div>
+                    <div className="flex items-center space-x-1 text-yellow-500">
+                      <Star className="h-4 w-4 fill-current" />
+                      <span className="text-sm font-medium">4.8</span>
                     </div>
                   </div>
 
-                  <p className="text-gray-600 text-sm mb-3">
-                    Perfect for your {preferences.bodyShape} body shape • {preferences.colorTone} undertones
+                  <p className="text-gray-500 text-sm mb-4">
+                    {outfit.items.length} pieces • Complete look
                   </p>
                   
-                  <p className="text-gray-500 text-xs mb-4">
-                    {outfit.items.length} pieces • Complete look • Fits your ${preferences.budget.replace('-', ' to $')} budget
-                  </p>
 
-                  <div className="space-y-3 mb-4">
+                  <div className="space-y-2 mb-4">
                     {outfit.items.slice(0, 3).map((item) => (
-                      <div key={item.id} className="flex items-center justify-between text-sm">
+                      <div key={item.id} className="flex items-center justify-between text-sm text-gray-700">
                         <span className="text-gray-700">{item.name}</span>
-                        <span className="font-medium">${item.price}</span>
+                        <span className="font-medium text-gray-900">${item.price}</span>
                       </div>
                     ))}
                     {outfit.items.length > 3 && (
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-500 text-center pt-1">
                         +{outfit.items.length - 3} more items
                       </div>
                     )}
@@ -212,7 +205,7 @@ const OutfitCatalog = ({ preferences, prompt, onBack }) => {
 
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-xl font-bold text-gray-900">
                         ${outfit.totalPrice}
                       </div>
                       <div className="text-sm text-gray-500">Complete outfit</div>
@@ -222,7 +215,7 @@ const OutfitCatalog = ({ preferences, prompt, onBack }) => {
                         e.stopPropagation();
                         handleAddToCart(outfit);
                       }}
-                      className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-colors flex items-center space-x-2"
+                      className="bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 transition-colors flex items-center space-x-2 text-sm"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
